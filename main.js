@@ -4,59 +4,100 @@
 // - Utilizziamo poi gli input presenti nella pagina per permettere all’utente di aggiungere nuovi membri del team.
 
 //inserimento struttura dati card 
+
+const cardsContainer = document.querySelector('.team-container');
+const newName = document.getElementById('name');
+const newRole = document.getElementById('role');
+const newImage = document.getElementById('image');
+const addMemberBtn = document.getElementById('addMemberButton');
+
 const cards = [
     {  
         name: 'Wayne Barnett',
         role:'Founder & CEO',
-        image: 'img/wayne-barnett-founder-ceo.jpg',
+        image: 'wayne-barnett-founder-ceo.jpg',
     },
     { 
         name: 'Angela Caroll',
         role: 'Chief Editor',
-        image: 'img/angela-caroll-chief-editor.jpg', 
+        image: 'angela-caroll-chief-editor.jpg', 
     },
     {  
         name: 'Walter Gordon',
         role: 'Office Manager',
-        image: 'img/walter-gordon-office-manager.jpg',
+        image: 'walter-gordon-office-manager.jpg',
     },
     {  
         name: 'Angela Lopez',
         role: 'Social Media Manager',
-        image: 'img/angela-lopez-social-media-manager.jpg',
+        image: 'angela-lopez-social-media-manager.jpg',
     },
     {  
         name: 'Scott Estrada',
         role: 'Developer',
-        image: 'img/scott-estrada-developer.jpg',
+        image: 'scott-estrada-developer.jpg',
     },
     {  
         name: 'Barbara Ramos',
         role: 'Graphic Designer',
-        image: 'img/barbara-ramos-graphic-designer.jpg',
+        image: 'barbara-ramos-graphic-designer.jpg',
     },
 ];
 console.log(cards);
-console.table(cards);
 
-//container in cui sono contenute le card
-const cardsContainer = document.querySelector('.team-container');
+genCardTeam (cards, cardsContainer)
+
+genNewMember(newName, newRole, newImage)
 
 //iterazione delle card
-for(let i = 0; i < cards.length; i++){
-    const cardItem = cards[i];
-    console.log(cardItem);
+function genCardTeam (cards, cardsContainer){
+    
+    cardsContainer.innerHTML = '';
 
-    //creare markup delle cards
-    cardsContainer.innerHTML += `
-    <div class="team-card">
-        <div class="card-image">
-            <img src="${cardItem.image}" alt="${cardItem.name}"/>
-        </div>
-        <div class="card-text">
-            <h3>${cardItem.name}</h3>
-            <p>${cardItem.role}</p>
-        </div>
-    </div> 
-    `;
+    for(let i = 0; i < cards.length; i++){
+        const cardItem = cards[i];
+        console.log(cardItem);
+
+        //creare markup delle cards
+        cardsContainer.innerHTML += `
+        <div class="team-card">
+            <div class="card-image">
+                <img src="img/${cardItem.image}" alt="${cardItem.name}"/>
+            </div>
+            <div class="card-text">
+                <h3>${cardItem.name}</h3>
+                <p>${cardItem.role}</p>
+            </div>
+        </div> 
+        `;
+    }
+};
+
+
+//generazione nuovi membri
+
+addMemberBtn.addEventListener('click', () => {
+    console.log('click');
+
+    const NewMember = genNewMember(newName, newRole, newImage)
+
+    cards.push(NewMember)
+
+    genCardTeam (cards, cardsContainer)
+});
+
+//generazione dati inseriti 
+function genNewMember(name, role, image){
+    const newCards = {
+        name: name.value,
+        role: role.value,
+        image: image.value,
+    };
+
+    name.value = '';
+    role.value = '';
+    image.value = '';
+
+    return newCards;
+
 }
